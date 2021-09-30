@@ -1,14 +1,32 @@
-import './App.css';
-import {ListaDeNotas} from './components/listaNotas.jsx'
-import {FormularioCadastro} from './components/formularioCadastro.jsx'
+import React, { Component } from "react";
+import ListaDeNotas from "./components/ListaDeNotas";
+import FormularioCadastro from "./components/FormularioCadastro";
+import "./assets/App.css";
+import './assets/index.css';
+class App extends Component {
+  constructor(){
+    super()
+    this.state = {
+      notas: []
+    }
+  }
+  criarNota(titulo, texto){
+    const novaNota = {titulo, texto}
+    const novoArrayNotas = [...this.state.notas, novaNota]
+    const novoEstado = {
+      notas: novoArrayNotas
+    }
+    this.setState(novoEstado)
+  }
 
-function App() {
-  return (
-  <section>
-    <FormularioCadastro />
-    <ListaDeNotas />
-  </section>
-  );
+  render() {
+    return (
+      <section className="conteudo">
+        <FormularioCadastro criarNota={this.criarNota.bind(this)}/>
+        <ListaDeNotas notas={this.state.notas}/>
+      </section>
+    );
+  }
 }
 
 export default App;
